@@ -23,7 +23,7 @@ output_file = open("/run/shm/test.csv", "w", encoding="utf8")
 open_file_object = csv.writer(output_file)
 open_file_object.writerow(TITLE)
 
-search = SearchStream.fetchmany(10000)
+search = SearchStream.fetchmany(1000000)
 cnt = len(search)
 rows = []
 while search:
@@ -61,6 +61,8 @@ while search:
         user_info = UserInfo.fetchone()
         category = Category.fetchone()
         location = Location.fetchone()
+
+        # Changes the value to 0 rather than NaN when it is not there after doing outer joins. 
         if ads_info is None:
             ads_info = [0 for k in range(7)]
         if user_info is None:
@@ -69,13 +71,15 @@ while search:
             category = [0 for k in range(4)]
         if location is None:
             location = [0 for k in range(4)]
+
+            
         row = list(i) + list(search_info[1:]) + list(user_info[1:]) + \
               list(ads_info[3:]) + list(category[1:]) + list(location[1:])
         rows.append(row)
     print(cnt)
     open_file_object.writerows(rows)
     rows = []
-    search = SearchStream.fetchmany(10000)
+    search = SearchStream.fetchmany(1000000)
     cnt += len(search)
 
 output_file.close()
