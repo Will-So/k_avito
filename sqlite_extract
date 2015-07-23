@@ -76,6 +76,6 @@ LEFT OUTER JOIN UserInfo d ON d.UserID=b.UserID;
 .mode csv
 .headers on
 .output newdataset.csv
-SELECT * from BigData5test;
+SELECT * from BigData5train;
 .output stdout
                 
