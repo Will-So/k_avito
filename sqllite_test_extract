@@ -1,4 +1,5 @@
 .timer ON
+PRAGMA temp_store = 2;
 CREATE TABLE SearchInfo_ AS SELECT
 	a.SearchID,
 	a.SearchDate, 
